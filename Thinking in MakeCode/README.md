@@ -6,7 +6,7 @@
 下载例程文件<kbd>[microbit-blocking_test.hex](https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20folder/microbit-blocking_test.hex)</kbd>到本地，然后导入到MakeCode中打开，也可参照下列截图在MakeCode中编程。
 <div align=center><img src="https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20screenshot%20folder/1.1blocking_test.png" width="25%"></div>
 
-### 1.2 惯性思维的困局
+### 1.2 惯性思维的困境
 将程序烧录到micro:bit内或直接在仿真器内观察程序运行的结果，仅粗略的估算就能明显的发现程序中规定的动作时间和实际运行的时间差距很大，此时我们需要进一步检查程序实际执行所需时间，手动掐秒表的方式显然存在人为引入的误差，而在程序中额外插入几段用于检测程序实际执行所需时间的代码（积木）并从串口直接输出检测到的时间则相对精准很多。  
 例程文件<kbd>[microbit-blocking_test_2.hex](https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20folder/microbit-blocking_test_2.hex)</kbd>。  
 将例程下载到本地导入到MakeCode中打开，可以看到在程序中加入了如下列截图所示的积木。  
@@ -21,3 +21,7 @@
 >3:2607ms  
 >4:12286ms  
 </div>
+这明显不符合我们预期设计的结果，累计共运行了23580ms，且可以算得执行第一段程序时减去延时的2000ms，还额外运行了606ms，以及后面三段都有减去延时后额外的运行时间。
+
+至此，我们陷入了思维困境，而假若我们的思维开始钻牛角尖，想要要在这样的程序基础上实现更准确的延时，而反复计算每一段的运行时间，再从延时中扣除，如此往复，以至于直接修改了原来既定的需求，不断陷入更加复杂而容易出错的困境中，可以感受到每一段代码(积木)的执行所要消耗的运行时间都将推迟其后面的代码的运行，像是互相之间锁死在一起，我们可以称其为“blocking code”阻塞代码，而这样的编程思维的灾难在程序的复杂性不断增加的过程中会变得愈发严重而难以挽救。  
+### 1.3 清晰的non-blocking思维
