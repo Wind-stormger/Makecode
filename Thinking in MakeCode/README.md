@@ -10,4 +10,14 @@
 将程序烧录到micro:bit内或直接在仿真器内观察程序运行的结果，仅粗略的估算就能明显的发现程序中规定的动作时间和实际运行的时间差距很大，此时我们需要进一步检查程序实际执行所需时间，手动掐秒表的方式显然存在人为引入的误差，而在程序中额外插入几段用于检测程序实际执行所需时间的代码（积木）并从串口直接输出检测到的时间则相对精准很多。  
 例程文件<kbd>[microbit-blocking_test_2.hex](https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20folder/microbit-blocking_test_2.hex)</kbd>。  
 将例程下载到本地导入到MakeCode中打开，可以看到在程序中加入了如下列截图所示的积木。  
-<div align=center><img src="https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20screenshot%20folder/1.2blocking_test_2.png" width="50%"></div>  
+<div align=center><img src="https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20screenshot%20folder/1.2blocking_test_2.png" width="50%"></div> 
+
+其中"running time(ms)"可以获取程序从最开始被启动一直执行到这一块的总运行时间(单位ms)，想要设计一个获取某一段程序运行所需的具体时间，则在这段程序前后各读取一次"running time(ms)"，并将后者减去前者，即可得到该段程序运行所需的具体时间。  
+现在到仿真器里观察四段程序的运行时间，其结果如下:  
+<div align=center>
+
+>1:2606ms  
+>2:6081ms  
+>3:2607ms  
+>4:12286ms  
+</div>
