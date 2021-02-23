@@ -2,7 +2,7 @@
 ## 1. 从non-blocking思维开始
 ### 1.1 用micro:bit实现一个简单的需求
 最开始，先提出一段原始的需求，micro:bit上有5*5的LED矩阵，我们可以单独点亮其中某个或某几个LED，那么如何设计一个程序，使一个LED间隔1秒闪烁，同时使另一个LED间隔2秒闪烁呢？  
-这看起来不难，我们可能会习惯于这样理解这个需求，延时一秒，点亮第一个LED，延时一秒，熄灭第一个LED，同时点亮第二个LED，延时一秒，点亮第一个LED，延时一秒，熄灭第一个LED和第二个LED，然后循环上述流程，我们可以在MakeCode里设计类似的程序出来。“Plot”方块可以指定点亮LED矩阵中的一个LED，“Unplot”方块则是指定熄灭一个LED。  
+这看起来不难，我们可能会习惯于这样理解这个需求，延时一秒，点亮第一个LED，延时一秒，熄灭第一个LED，同时点亮第二个LED，延时一秒，点亮第一个LED，延时一秒，熄灭第一个LED和第二个LED，然后循环上述流程，我们可以在MakeCode里设计类似的程序出来。“Plot”积木可以指定点亮LED矩阵中的一个LED，“Unplot”积木则是指定熄灭一个LED。  
 下载例程文件<kbd>[microbit-blocking_test.hex](https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20folder/microbit-blocking_test.hex)</kbd>到本地，然后导入到MakeCode中打开，也可参照下列截图在MakeCode中编程。
 <div align=center><img src="https://raw.githubusercontent.com/Wind-stormger/Makecode/master/Thinking%20in%20MakeCode/Routine%20screenshot%20folder/1.1blocking_test.png" width="25%"></div>
 
@@ -16,4 +16,5 @@
 如果我们此时在需求上再增加更多要以不同频率闪烁的LED呢？  
 至此，我们似乎陷入了一种思维困境，再继续使用延时的方法，如此往复，我们的代码将陷入更加复杂而容易出错的困境中，每一行就像是互相之间锁死在一起，我们可以称其为“blocking code”阻塞代码，而这样的编程思维在程序的复杂性不断增加的过程中造成的灾难性后果将会变得愈发严重而难以挽救。  
 ### 1.3 清晰的non-blocking思维
-我们回到最开始，重新审视我们的需求，在1.1小节中，
+我们回到最开始，重新审视我们的需求，在1.1小节中，我们提出了使一个LED间隔1秒闪烁，同时使另一个LED间隔2秒闪烁的需求。现在跳脱出使用延时来逐一设置LED亮灭时间的思维，开始尝试一种新的思维，设计一个可以在While循环中用If判断当前时间是否满足条件的程序。  
+在MakeCode中有一个“Running Time(ms)”积木,它可以获得程序自开始运行以来经过的时间，单位为毫秒(ms)，在“Variables”中自定义一个变量并用于存储我们从“Running Time(ms)”中读取到的时间，再设计一个if判断，当“Running Time(ms)”减去这个存储了上次读取到的运行时间的变量大于等于我们设计的LED闪烁间隔时长，就改变指定的LED的亮灭状态，执行完这一步后立刻将此次“Running Time(ms)”读取到的时间存储到自定义的变量中用于在while循环中的下次if判断，
