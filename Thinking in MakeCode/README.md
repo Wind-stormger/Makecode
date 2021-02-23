@@ -16,5 +16,9 @@
 如果我们此时在需求上再增加更多要以不同频率闪烁的LED呢？  
 至此，我们似乎陷入了一种思维困境，再继续使用延时的方法，如此往复，我们的代码将陷入更加复杂而容易出错的困境中，每一行就像是互相之间锁死在一起，我们可以称其为“blocking code”阻塞代码，而这样的编程思维在程序的复杂性不断增加的过程中造成的灾难性后果将会变得愈发严重而难以挽救。  
 ### 1.3 清晰的non-blocking思维
-我们回到最开始，重新审视我们的需求，在1.1小节中，我们提出了使一个LED间隔1秒闪烁，同时使另一个LED间隔2秒闪烁的需求。现在跳脱出使用延时来逐一设置LED亮灭时间的思维，开始尝试一种新的思维，设计一个可以在While循环中用If判断当前时间是否满足条件的程序。  
-在MakeCode中有一个“Running Time(ms)”积木,它可以获得程序自开始运行以来经过的时间，单位为毫秒(ms)，在“Variables”中自定义一个变量并用于存储我们从“Running Time(ms)”中读取到的时间，再设计一个if判断，当“Running Time(ms)”减去这个存储了上次读取到的运行时间的变量大于等于我们设计的LED闪烁间隔时长，就改变指定的LED的亮灭状态，执行完这一步后立刻将此次“Running Time(ms)”读取到的时间存储到自定义的变量中用于在while循环中的下次if判断，
+我们回到最开始，重新审视我们的需求，在1.1小节中，我们提出了使一个LED间隔1秒闪烁，同时使另一个LED间隔2秒闪烁的需求。现在跳脱出使用延时来逐一设置LED亮灭时间的思维，开始尝试一种新的思维，设计一个可以在While循环中用if判断当前时间是否满足条件的程序。  
+在MakeCode中有一个“Running Time(ms)”积木,它可以获得程序自开始运行以来经过的时间，单位为毫秒(ms)，在“Variables”中自定义一个变量并用于存储我们从“Running Time(ms)”中读取到的时间，再设计一个if判断，当“Running Time(ms)”减去这个存储了上次读取到的运行时间的变量后，若其结果大于等于我们设计的LED闪烁间隔时长，就改变指定的LED的亮灭状态，执行完这一步后立刻将此次“Running Time(ms)”读取到的时间赋值到这个变量中用于在while循环中的下次有关于这个变量的if判断。  
+关于前文中“改变指定的LED的亮灭状态”，其意思就是当LED亮时就灭掉，当LED灭时就点亮，可以用在if判断中读取指定的LED的状态是否被点亮，是则灭掉LED，否则点亮LED。另外我们可以把这段“改变指定的LED的亮灭状态”的程序单独列入一个自定义的“function”函数中，虽然并不会对整体程序有什么影响，但这样的编程习惯有利于在主程序中需要重复使用这段函数的情况下精简程序长度，方便我们多次调用它，而且有利于调试查错并可以单独修改。  
+这里给出例程文件<kbd>[microbit-non-blocking_test.hex](https://github.com/Wind-stormger/Makecode/blob/master/Thinking%20in%20MakeCode/Routine%20folder/microbit-non-blocking_test.hex)</kbd>以及该例程的截图  
+<div align=center><img src="https://raw.githubusercontent.com/Wind-stormger/Makecode/master/Thinking%20in%20MakeCode/Routine%20screenshot%20folder/1.3non-blocking_test.png" width="100%"></div>  
+可以下载例程文件到本地，然后导入到MakeCode中打开，也可参照截图在MakeCode中编程。
